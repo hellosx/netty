@@ -18,9 +18,10 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("连接上服务端了，客户端开始写出数据到服务端");
 
-        ByteBuf byteBuf = getByteBuf(ctx);
-
-        ctx.channel().writeAndFlush(byteBuf);
+        for (int i = 0; i < 1000; i++) {
+            ByteBuf byteBuf = getByteBuf(ctx);
+            ctx.channel().writeAndFlush(byteBuf);
+        }
     }
 
     private ByteBuf getByteBuf(ChannelHandlerContext ctx) {

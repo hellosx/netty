@@ -22,10 +22,10 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println(byteBuf.toString(Charset.forName("UTF-8")));
 
         // 回复数据
-        ByteBuf byteBuf1 = ctx.alloc().buffer();
-
-        byteBuf1.writeBytes("服务端写出数据".getBytes(Charset.forName("UTF-8")));
-
-        ctx.channel().writeAndFlush(byteBuf1);
+//        ByteBuf byteBuf1 = ctx.alloc().buffer();
+//
+//        byteBuf1.writeBytes("服务端写出数据".getBytes(Charset.forName("UTF-8")));
+//
+//        ctx.channel().writeAndFlush(byteBuf1);
     }
 }

@@ -1,5 +1,6 @@
 package server;
 
+import decoder.Spliter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -29,6 +30,7 @@ public class NettyServer {
 
             @Override
             protected void initChannel(NioSocketChannel ch) throws Exception {
+                ch.pipeline().addLast(new Spliter());
                 ch.pipeline().addLast(new PacketDecoder());
                 ch.pipeline().addLast(new LoginRequestHandler());
                 ch.pipeline().addLast(new MessageRequestHandler());
