@@ -1,5 +1,6 @@
 package client;
 
+import client.handler.LoginResponseHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -10,6 +11,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import protocol.MessagePackRequest;
 import protocol.PacketCodeC;
+import protocol.PacketDecoder;
+import protocol.PacketEncoder;
 import util.LoginUtil;
 
 import java.util.Scanner;
@@ -34,7 +37,9 @@ public class NettyClient {
 
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new ClientHandler());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
 

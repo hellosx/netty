@@ -48,6 +48,31 @@ public class PacketCodeC {
 
     private PacketCodeC(){}
 
+    public ByteBuf enCode(ByteBuf byteBuf, Packet packet) {
+        // 写入魔数
+        byteBuf.writeInt(MAGIC_NUM);
+
+        // 写入版本号
+        byteBuf.writeByte(packet.getVersion());
+
+        // 写入序列化算法，使用JSON序列化
+        Serializer serializer = Serializer.DEFAULT;
+        byteBuf.writeByte(serializer.getSerializerAlgorithm());
+
+        // 写入指令
+        byteBuf.writeByte(packet.getCommand());
+
+        byte[] data = serializer.serializer(packet);
+
+        // 写入数据长度
+        byteBuf.writeByte(data.length);
+
+        // 写入数据
+        byteBuf.writeBytes(data);
+
+        return byteBuf;
+    }
+
     public ByteBuf enCode(Packet packet) {
 
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
@@ -101,7 +126,6 @@ public class PacketCodeC {
         // 获取数据
         return serializer.deserializer(clazz, data);
     }
-
 
     public static void main(String[] args) {
         PacketCodeC packetCodeC = new PacketCodeC();
