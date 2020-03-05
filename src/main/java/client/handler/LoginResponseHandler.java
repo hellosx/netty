@@ -21,9 +21,9 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginPacke
         Packet packet = new LoginPacketRequest();
         ((LoginPacketRequest) packet).setUserId(1);
         ((LoginPacketRequest) packet).setUserName("zhangsan");
-        ((LoginPacketRequest) packet).setPassword("123456");
+        ((LoginPacketRequest) packet).setPassword("1234567");
 
-        ctx.channel().writeAndFlush(packet);
+//        ctx.channel().writeAndFlush(packet);
     }
 
     @Override

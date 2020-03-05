@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import protocol.LoginPacketRequest;
 import protocol.LoginPacketResponse;
+import util.LoginUtil;
 
 /**
  * @author sunxin@yunrong.cn
@@ -20,6 +21,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginPacket
 
         if ("zhangsan".equals(msg.getUserName()) && "123456".equals(msg.getPassword())) {
             System.out.println("登陆成功");
+            LoginUtil.markLogin(ctx.channel());
             loginPacketResponse.setSuccess(true);
         }
         else {

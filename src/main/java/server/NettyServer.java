@@ -7,9 +7,9 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import protocol.PacketDecoder;
 import protocol.PacketEncoder;
+import server.handler.AuthHandler;
 import server.handler.ConnectCountHandler;
 import server.handler.LoginRequestHandler;
 import server.handler.MessageRequestHandler;
@@ -35,10 +35,10 @@ public class NettyServer {
             @Override
             protected void initChannel(NioSocketChannel ch) throws Exception {
                 ch.pipeline().addLast(new Spliter());
-//                ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
                 ch.pipeline().addLast(new ConnectCountHandler());
                 ch.pipeline().addLast(new PacketDecoder());
                 ch.pipeline().addLast(new LoginRequestHandler());
+                ch.pipeline().addLast(new AuthHandler());
                 ch.pipeline().addLast(new MessageRequestHandler());
                 ch.pipeline().addLast(new PacketEncoder());
             }

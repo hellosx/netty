@@ -82,7 +82,7 @@ public class NettyClient {
         new Thread(() -> {
             while (!Thread.interrupted()) {
 
-                if (LoginUtil.hasLogin(channel)) {
+//                if (LoginUtil.hasLogin(channel)) {
                     System.out.println("请输入消息发送");
                     Scanner scanner = new Scanner(System.in);
 
@@ -93,7 +93,7 @@ public class NettyClient {
 
                     ByteBuf byteBuf = PacketCodeC.getINSTANCE().enCode(request);
                     channel.writeAndFlush(byteBuf);
-                }
+//                }
 
             }
         }).start();
