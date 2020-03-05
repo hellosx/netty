@@ -42,8 +42,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             if (loginPacketResponse.getSuccess()) {
                 LoginUtil.markLogin(ctx.channel());
                 System.out.println("客户端登陆成功");
-            }
-            else {
+            } else {
                 System.out.println("客户端登陆失败");
             }
         }
