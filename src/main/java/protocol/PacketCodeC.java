@@ -65,7 +65,7 @@ public class PacketCodeC {
         byte[] data = serializer.serializer(packet);
 
         // 写入数据长度
-        byteBuf.writeByte(data.length);
+        byteBuf.writeInt(data.length);
 
         // 写入数据
         byteBuf.writeBytes(data);
@@ -93,7 +93,7 @@ public class PacketCodeC {
         byte[] data = serializer.serializer(packet);
 
         // 写入数据长度
-        byteBuf.writeByte(data.length);
+        byteBuf.writeInt(data.length);
 
         // 写入数据
         byteBuf.writeBytes(data);
@@ -118,7 +118,7 @@ public class PacketCodeC {
         Class<? extends Packet> clazz = packetMap.get(command);
 
         // 跳过数据长度
-        byte length = byteBuf.readByte();
+        int length = byteBuf.readInt();
 
         byte[] data = new byte[length];
         byteBuf.readBytes(data);

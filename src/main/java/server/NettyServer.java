@@ -10,8 +10,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import protocol.PacketDecoder;
 import protocol.PacketEncoder;
+import server.handler.ConnectCountHandler;
 import server.handler.LoginRequestHandler;
 import server.handler.MessageRequestHandler;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author sunxin@yunrong.cn
@@ -31,8 +34,9 @@ public class NettyServer {
 
             @Override
             protected void initChannel(NioSocketChannel ch) throws Exception {
-//                ch.pipeline().addLast(new Spliter());
-                ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                ch.pipeline().addLast(new Spliter());
+//                ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 7, 4));
+                ch.pipeline().addLast(new ConnectCountHandler());
                 ch.pipeline().addLast(new PacketDecoder());
                 ch.pipeline().addLast(new LoginRequestHandler());
                 ch.pipeline().addLast(new MessageRequestHandler());
@@ -41,6 +45,13 @@ public class NettyServer {
         });
 
         autoBind(serverBootstrap, 9090);
+
+        bossGroup.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(ConnectCountHandler.atomicInteger);
+            }
+        }, 5, 1, TimeUnit.SECONDS);
     }
 
 
