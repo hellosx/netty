@@ -19,7 +19,6 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginPacke
         System.out.println("客户端开始登陆");
 
         Packet packet = new LoginPacketRequest();
-        ((LoginPacketRequest) packet).setUserId(1);
         ((LoginPacketRequest) packet).setUserName("zhangsan");
         ((LoginPacketRequest) packet).setPassword("1234567");
 

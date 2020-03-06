@@ -9,6 +9,8 @@ import protocol.Packet;
 import protocol.PacketCodeC;
 import util.LoginUtil;
 
+import java.util.UUID;
+
 /**
  * @author sunxin@yunrong.cn
  * @version V2.1
@@ -21,7 +23,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         System.out.println("客户端开始登陆");
 
         Packet packet = new LoginPacketRequest();
-        ((LoginPacketRequest) packet).setUserId(1);
+        ((LoginPacketRequest) packet).setUserId(randomUserId());
         ((LoginPacketRequest) packet).setUserName("zhangsan");
         ((LoginPacketRequest) packet).setPassword("123456");
 
@@ -46,6 +48,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 System.out.println("客户端登陆失败");
             }
         }
+    }
 
+    private static String randomUserId() {
+        return UUID.randomUUID().toString().split("-")[0];
     }
 }
